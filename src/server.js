@@ -3,22 +3,34 @@
 // import express from "express"
 //const app = express()
 
-
-
-
 import dotenv from "dotenv";
-import connectDB from "./db";
+import connectDB from "./db/index.js";
+import app from "./app.js";
 
 dotenv.config({
-    path: './env'
-})
+  path: "./.env",
+});
 
-connectDB();
-// first approach 
+const startServer = async () => {
+  try {
+    await connectDB();
+
+    const port = process.env.PORT || 8000;
+    app.listen(port, () => {
+      console.log(`App is listening on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Startup failed:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
+// first approach
 // function connectDB(){}
 
 // connectDB()
-  /*
+/*
 (async () => {
     try {
      await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
@@ -37,6 +49,3 @@ connectDB();
 })()
 
 */
-
-
-
