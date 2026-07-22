@@ -1,51 +1,54 @@
-// import mongoose, { modelNames } from "mongoose";
-// import {DB_NAME} from "./constants";
-// import express from "express"
-//const app = express()
-
-import dotenv from "dotenv";
+import mongoose from "mongoose";
+import { DB_NAME } from "./constants.js";
+import express from "express";
 import connectDB from "./db/index.js";
-import app from "./app.js";
+// const dns = require("dns");
+import dns from "dns";
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
+connectDB()
 
-dotenv.config({
-  path: "./.env",
-});
+//(error, req, res, next) four type of but we use only two (req, res)
+.then(()=>{
+  app.listen(process.env.PORT || 8000, () => {
+    console.log(`Server is running at port : ${process.env.PORT}`);
+  })
+})
+.catch((err)=>{
+  console.log("Mongo sb connection failed !!", err);
+})
 
-const startServer = async () => {
-  try {
-    await connectDB();
 
-    const port = process.env.PORT || 8000;
-    app.listen(port, () => {
-      console.log(`App is listening on port ${port}`);
-    });
-  } catch (error) {
-    console.error("Startup failed:", error);
-    process.exit(1);
-  }
-};
 
-startServer();
-// first approach
-// function connectDB(){}
 
-// connectDB()
+
+
+
+
+
+
+
+
+
+
+
+//if ee approach
 /*
-(async () => {
-    try {
-     await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
-     app.on("error", (error) => {
-        console.log("Error", error);
-        throw error
-     })
+const app = express()(async () => {
+  try {
+    await mongoose.connect(`${process.env.MONGODB_URI}/$
+      {DB_NAME}`);
 
-     app.listen(process.env.PORT, () => {
-        console.log(`App is listening on port ${process.env.PORT}`);
-     })
-    } catch(error){
-        console.error("ERROR:", error)
-        throw error
-    }
-})()
+    app.on("error", (error) => {
+      console.log("ERROR: ", error);
+      throw error;
+    });
 
+    app.listen(process.env.PORT, ()=>{
+      console.log(`App is listening on port ${process.env.PORT}`)
+    })
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+})();
 */
