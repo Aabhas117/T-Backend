@@ -1,21 +1,22 @@
-import mongoose from "mongoose";
-import { DB_NAME } from "./constants.js";
 import express from "express";
 import connectDB from "./db/index.js";
 import dotenv from "dotenv";
-// const dns = require("dns");
 import dns from "dns";
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-config.config({
+dotenv.config({
   path: "./.env",
 });
+
+const app = express();
+
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 connectDB()
   //(error, req, res, next) four type of but we use only two (req, res)
   .then(() => {
-    app.listen(process.env.PORT || 8000, () => {
-      console.log(`Server is running at port : ${process.env.PORT}`);
+    const port = process.env.PORT || 8000;
+    app.listen(port, () => {
+      console.log(`Server is running at port : ${port}`);
     });
   })
   .catch((err) => {
