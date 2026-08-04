@@ -11,6 +11,11 @@ const app = express();
 
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
+
+app.get("/", (req, res) => {
+    res.send("Backend is running ");
+});
+
 connectDB()
   //(error, req, res, next) four type of but we use only two (req, res)
   .then(() => {
