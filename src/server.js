@@ -1,23 +1,15 @@
-import express from "express";
-import connectDB from "./db/index.js";
 import dotenv from "dotenv";
 import dns from "dns";
+import connectDB from "./db/index.js";
+import app from "./app.js";
 
 dotenv.config({
   path: "./.env",
 });
 
-const app = express();
-
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
-
-app.get("/", (req, res) => {
-    res.send("Backend is running ");
-});
-
 connectDB()
-  //(error, req, res, next) four type of but we use only two (req, res)
   .then(() => {
     const port = process.env.PORT || 8000;
     app.listen(port, () => {
@@ -28,8 +20,6 @@ connectDB()
     console.log("Mongo sb connection failed !!", err);
   });
 
-
-  
 //if ee approach
 /*
 const app = express()(async () => {
