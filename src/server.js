@@ -16,9 +16,14 @@ connectDB()
       console.log(`Server is running at port : ${port}`);
     });
   })
+  
   .catch((err) => {
     console.log("Mongo sb connection failed !!", err);
   });
+
+ app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
 //if ee approach
 /*
